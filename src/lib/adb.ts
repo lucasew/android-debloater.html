@@ -2,7 +2,7 @@ import USBBackend from '@yume-chan/adb-backend-webusb';
 import { writable, derived, get } from 'svelte/store';
 import { Adb, AdbPublicKeyAuthenticator } from '@yume-chan/adb';
 import AdbWebCredentialStore from '@yume-chan/adb-credential-web';
-import { convert as axmlConvert } from 'axml2xml';
+import { convert as axmlConvert } from './axml2xml.ts';
 import {Buffer} from 'buffer';
 import { join as shlexJoin } from 'shlex';
 Buffer.poolSize = 1;
@@ -33,7 +33,7 @@ export const packageList = derived(connection, async (adb) => {
     "-U" // mostrar uuid
   ]);
   const encoder = new TextEncoder();
-  return (await Promise.all(output.split("\n").map(async item => {
+  return (await Promise.all(output.split("\n").slice(0, 1).map(async item => {
     let ret = {}
     item.split(" ").map(part => {
       let [k, v] = part.split(":");
@@ -57,17 +57,18 @@ export const packageList = derived(connection, async (adb) => {
     // const catAndroidManifest = ["sh", "-c", `${shlexCommand} | base64`]
     // console.log(catAndroidManifest)
     ret['manifest'] = await adb.subprocess.spawnAndWaitLegacy(shlexCommand)
-    console.log(ret);
+    // console.log(ret);
     // const buf = Buffer.from(encoder.encode(ret['manifest']).buffer)
-    const buf = Buffer.from(ret['manifest'], 'utf-8')
+    const buf = Buffer.from(ret['manifest'], 'ascii')
     console.log(buf)
+    // return ret
     try {
       ret['manifest'] = axmlConvert(buf);
     } catch (e) {
       console.log("Fail: decode manifest", ret['package'], e)
     }
     return ret
-  }))).filter(x => !!x)
+  }))).filter(x => !!x);
 });
 
 packageList.subscribe((s) => console.log("apps", s))

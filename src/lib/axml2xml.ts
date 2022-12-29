@@ -1,5 +1,5 @@
 // based on https://raw.githubusercontent.com/micblo/axml2xml/de63563a26df93ef6bacf210b6eebe3a6b069d59/index.js
-const sprintf = require('sprintf-js').sprintf;
+import { sprintf } from 'sprintf-js'
 
 const WORD_START_DOCUMENT = 0x00080003;
 
@@ -560,10 +560,11 @@ export function parse(buf) {
  * @returns {string} String of .xml file
  */
 export function convert(buf) {
-    if (!buf.length % WORD_SIZE) {
+    if (!buf.length % WORD_SIZE*4) {
         console.error("tamanho do buffer não é múltiplo de WORD_SIZE")
     }
     const tree = parse(buf);
+    console.log('tree', tree)
     const xml = [];
     xml.push('<?xml version="1.0" encoding="utf-8"?>\n')
     xml.push(printTree(tree, 0));
