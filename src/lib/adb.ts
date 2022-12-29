@@ -54,11 +54,10 @@ export const packageList = derived(connection, async (adb) => {
       return null
     }
     const shlexCommand = ["unzip", packagePath, "AndroidManifest.xml", "-p"]
-    // const catAndroidManifest = ["sh", "-c", `${shlexCommand} | base64`]
-    // console.log(catAndroidManifest)
     ret['manifest'] = await adb.subprocess.spawnAndWaitLegacy(shlexCommand)
     // console.log(ret);
     // const buf = Buffer.from(encoder.encode(ret['manifest']).buffer)
+    console.log('len', ret['manifest'].length)
     const buf = Buffer.from(ret['manifest'], 'ascii')
     console.log(buf)
     // return ret
