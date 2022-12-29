@@ -21,6 +21,9 @@
   "dependencies": {
     "@yume-chan/adb": "^0.0.17",
     "@yume-chan/adb-backend-webusb": "^0.0.17",
-    "@yume-chan/adb-credential-web": "^0.0.17"
+    "@yume-chan/adb-credential-web": "^0.0.17",
+    "axml2xml": "^1.0.1",
+    "buffer": "^6.0.3",
+    "shlex": "^2.1.2"
   }
 }
