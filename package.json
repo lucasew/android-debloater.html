@@ -19,7 +19,7 @@
     "vite": "^4.0.0"
   },
   "dependencies": {
-    "@yume-chan/adb": "^0.0.24",
+    "@yume-chan/adb": "^2.0.0",
     "@yume-chan/adb-backend-webusb": "^0.0.19",
     "@yume-chan/adb-credential-web": "^0.0.24",
     "axml2xml": "^1.0.1",
