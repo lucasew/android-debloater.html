@@ -16,7 +16,7 @@
     "svelte-check": "^4.0.0",
     "tslib": "^2.4.1",
     "typescript": "^5.0.0",
-    "vite": "^6.3.5"
+    "vite": "^7.0.0"
   },
   "dependencies": {
     "@yume-chan/adb": "^2.0.0",
